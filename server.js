@@ -2,6 +2,7 @@
 const express = require("express");
 const mustacheExpress = require("mustache-express");
 const bodyParser = require("body-parser");
+const { Client } = require("pg");
 
 //use module
 const app = express();
@@ -29,7 +30,25 @@ app.get("/add", (req, res) => {
 
 app.post("/meds/add", (req, res) => {
     console.log("post ", req.body);
-    res.redirect("/meds");
+    const client = new Client({
+        user: "hdinjos",
+        host: "127.0.0.1",
+        database: "medical1",
+        password: "qwerty123",
+        port: 5432,
+    });
+    client
+        .connect()
+        .then(() => {
+            console.log("connection complete");
+            const sql = "INSERT INTO meds (name, count, brand) VALUES ($1, $2, $3)";
+            const params = ["Cyclone", 12, "Jos"];
+            return client.query(sql, params);
+        })
+        .then((result) => {
+            console.log("result?", result);
+            res.redirect("/meds");
+        });
 });
 //app listen
 app.listen(5000, () => {
