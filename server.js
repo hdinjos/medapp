@@ -67,6 +67,28 @@ app.post("/meds/add", (req, res) => {
             res.redirect("/meds");
         });
 });
+
+app.post("/meds/delete/:id", (req, res) => {
+    const client = new Client({
+        user: "hdinjos",
+        host: "127.0.0.1",
+        database: "medical1",
+        password: "qwerty123",
+        port: 5432,
+    });
+
+    client
+        .connect()
+        .then(() => {
+            const sql = "DELETE from meds WHERE mid=$1";
+            const params = [req.params.id];
+            return client.query(sql, params);
+        })
+        .then((result) => {
+            res.redirect("/meds")
+        });
+});
+
 //app listen
 app.listen(5000, () => {
     console.log("server listen port 5000");
