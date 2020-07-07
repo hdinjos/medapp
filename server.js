@@ -21,15 +21,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //setting simple routing
 app.get("/meds", (req, res) => {
-    res.render("meds");
-});
-
-app.get("/add", (req, res) => {
-    res.render("med-form");
-});
-
-app.post("/meds/add", (req, res) => {
-    console.log("post ", req.body);
     const client = new Client({
         user: "hdinjos",
         host: "127.0.0.1",
@@ -37,6 +28,32 @@ app.post("/meds/add", (req, res) => {
         password: "qwerty123",
         port: 5432,
     });
+
+    client
+        .connect()
+        .then(() => {
+            return client.query("SELECT * FROM meds");
+        })
+        .then((result) => {
+            console.log("result?", result);
+            res.render("meds", result);
+        });
+});
+
+app.get("/add", (req, res) => {
+    res.render("med-form");
+});
+
+app.post("/meds/add", (req, res) => {
+    // console.log("post ", req.body);
+    const client = new Client({
+        user: "hdinjos",
+        host: "127.0.0.1",
+        database: "medical1",
+        password: "qwerty123",
+        port: 5432,
+    });
+
     client
         .connect()
         .then(() => {
