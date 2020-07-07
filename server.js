@@ -42,7 +42,7 @@ app.post("/meds/add", (req, res) => {
         .then(() => {
             console.log("connection complete");
             const sql = "INSERT INTO meds (name, count, brand) VALUES ($1, $2, $3)";
-            const params = ["Cyclone", 12, "Jos"];
+            const params = [req.body.name, req.body.count, req.body.brand];
             return client.query(sql, params);
         })
         .then((result) => {
