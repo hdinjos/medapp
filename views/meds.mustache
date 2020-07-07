@@ -4,11 +4,32 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>meds</title>
+    <title>list meds</title>
+    <style>
+        table, th, td {
+            border: 1px solid #000;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Hello express with mustache</h1>
+    <h1>List Meds</h1>
+    <table>
+        <tr>
+            <th>Mid</th>
+            <th>Name</th>
+            <th>Count</th>
+            <th>Brand</th>
+        </tr>
+    {{#rows}}
+        <tr>
+            <td>{{mid}}</td>
+            <td>{{name}}</td>
+            <td>{{count}}</td>
+            <td>{{brand}}</td>
+        </tr>
+    {{/rows}}
+    </table>
 </body>
 
 </html>
