@@ -1,0 +1,49 @@
+{{!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>list meds</title>
+    <style>
+        table, th, td {
+            border: 1px solid #000;
+        }
+    </style>
+</head> --}}
+
+{{!-- <body> --}}
+<h1>List Meds</h1>
+<hr>
+<a href="/add">Add</a> <br><br>
+<table>
+    <tr>
+        <th>Mid</th>
+        <th>Name</th>
+        <th>Count</th>
+        <th>Brand</th>
+        <th>Action</th>
+    </tr>
+    {{#rows}}
+    <tr>
+        <td>{{inc @index}}</td>
+        <td>{{name}}</td>
+        <td>{{count}}</td>
+        <td>{{brand}}</td>
+        <td>
+            <form action="/meds/delete/{{mid}}" method="post">
+                <button type="submit" style="background-color: red;">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {{/rows}}
+</table>
+
+<ul>
+    {{#each rows}}
+    <li>{{this.name}}</li>
+    {{/each}}
+</ul>
+{{!-- </body>
+
+</html> --}}
