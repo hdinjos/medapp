@@ -1,17 +1,23 @@
 //import module
 const express = require("express");
-const mustacheExpress = require("mustache-express");
+const hbsExpress = require("express-handlebars");
 const bodyParser = require("body-parser");
 const { Client } = require("pg");
+const path = require("path");
 
 //use module
 const app = express();
-const mustache = mustacheExpress();
 
-//setting up template engine
-mustache.cache = null;
-app.engine("mustache", mustache);
-app.set("view engine", "mustache");
+// setting up template engine
+const hbs = hbsExpress.create({
+    defaultLayout: "main",
+    layoutDir: path.join(__dirname, "views/layouts"),
+    helpers: { inc: value => value + 1 }
+});
+
+app.engine("hbs", hbs.engine);
+app.set("view engine", "hbs");
+
 
 //setting up storage
 app.use(express.static("public"));
@@ -19,7 +25,11 @@ app.use(express.static("public"));
 //setting up data input to json
 app.use(bodyParser.urlencoded({ extended: false }));
 
-//setting simple routing
+// //setting simple routing
+app.get("/", (req, res) => {
+    res.render("index");
+})
+
 app.get("/meds", (req, res) => {
     const client = new Client({
         user: "hdinjos",
