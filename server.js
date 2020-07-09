@@ -45,7 +45,7 @@ app.get("/meds", (req, res) => {
             return client.query("SELECT * FROM meds");
         })
         .then((result) => {
-            console.log("result?", result);
+            // console.log("result?", result);
             res.render("meds", result);
         });
 });
@@ -73,7 +73,7 @@ app.post("/meds/add", (req, res) => {
             return client.query(sql, params);
         })
         .then((result) => {
-            console.log("result?", result);
+            // console.log("result?", result);
             res.redirect("/meds");
         });
 });
@@ -99,6 +99,50 @@ app.post("/meds/delete/:id", (req, res) => {
         });
 });
 
+
+app.get("/meds/edit/:id", (req, res) => {
+    const client = new Client({
+        user: "hdinjos",
+        host: "127.0.0.1",
+        database: "medical1",
+        password: "qwerty123",
+        port: 5432,
+    });
+
+    client
+        .connect()
+        .then(() => {
+            const sql = "SELECT * FROM meds WHERE mid=$1";
+            const params = [req.params.id];
+            return client.query(sql, params);
+        })
+        .then((result) => {
+            // console.log("this result: ", result)
+            res.render("edit-med", result)
+        })
+})
+
+app.post("/meds/update", (req, res) => {
+    const client = new Client({
+        user: "hdinjos",
+        host: "127.0.0.1",
+        database: "medical1",
+        password: "qwerty123",
+        port: 5432
+    });
+
+    client
+        .connect()
+        .then(() => {
+            const sql = "UPDATE meds SET name=$2, count=$3, brand=$4 WHERE mid=$1";
+            const params = [req.body.mid, req.body.name, req.body.count, req.body.brand];
+            return client.query(sql, params);
+        })
+        .then((result) => {
+            console.log("save successfull", result);
+            res.redirect("/meds");
+        })
+});
 //app listen
 app.listen(5000, () => {
     console.log("server listen port 5000");
