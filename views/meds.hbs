@@ -31,8 +31,11 @@
         <td>{{count}}</td>
         <td>{{brand}}</td>
         <td>
-            <form action="/meds/delete/{{mid}}" method="post">
-                <button type="submit" style="background-color: red;">Delete</button>
+            <form action="/meds/delete/{{mid}}" method="post" style="display:inline;">
+                <button type="submit" style="background-color: red; color: #fff;">Delete</button>
+            </form>
+            <form action="/meds/edit/{{mid}}" method="get" style="display:inline;">
+                <button type="submit" style="background-color:blue; color: #fff;">Edit</button>
             </form>
         </td>
     </tr>
