@@ -1,0 +1,12 @@
+<h1>Form Edit Meds</h1>
+
+<form action="/meds/update" method="post">
+  {{#each rows}}
+  <input type="hidden" name="mid" value="{{mid}}" placeholder="input name" />
+  <input type="text" name="name" value="{{name}}" placeholder="input name" /> <br />
+  <input type="text" name="count" value="{{count}}" placeholder="input count" /> <br />
+  <input type="text" name="brand" value="{{brand}}" placeholder="input brand" /> <br />
+  {{/each}}
+  {{! <input type=submit value="Add"> }}
+  <button type="submit">Save</button>
+</form>
